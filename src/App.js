@@ -1,8 +1,9 @@
 
 import {
-  Route,
   BrowserRouter as Router,
-  Link,Switch
+  Route,
+  Routes,
+  Link,Switch, BrowserRouter
 } from "react-router-dom";
 import './App.css';
 import Header from  './components/Header';
@@ -12,12 +13,17 @@ import NotesListPage from './pages/NotesListPage';
 
 function App() {
   return (
-    <div className="App">
-      My project
-      <Header />
-      <Route path='/' exact component={NotesListPage} />
-      <Route path="/note" component={Notepage} />
+   <BrowserRouter>
+     <div className="container dark">
+       <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/"  element={<NotesListPage/>} />
+          <Route path="/note/:id" element={<Notepage/>} />
+        </Routes>
+      </div>
     </div>
+  </BrowserRouter>
   );
 }
 
