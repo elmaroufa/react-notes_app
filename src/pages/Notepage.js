@@ -13,7 +13,9 @@ const Notepage = () => {
   useEffect(()=> {
     getNote()
   },[noteId])
+
   let getNote = async() => {
+    if (noteId === 'new') return
     let response = await fetch(`http://localhost:8000/notes/${noteId}`)
     let data = await response.json()
     setNote(data)
@@ -27,6 +29,17 @@ const Notepage = () => {
      body: JSON.stringify({ ...note, 'updated': new Date()})
     });
   }
+
+  let createteNote = async() => {
+    await fetch('http://localhost:8000/notes/',{
+     method: 'POST',
+     headers: {
+       'Content-Type' : 'application/json'
+     },
+     body: JSON.stringify({ ...note, 'updated': new Date()})
+    });
+  }
+
   let deleteNote = async() => {
     await fetch(`http://localhost:8000/notes/${noteId}`,{
      method: 'DELETE',
@@ -45,6 +58,9 @@ const Notepage = () => {
     } else if (noteId === 'new'){
       updateNote()
     }
+    else if(noteId === 'new' && note !== null) {
+        createteNote()
+    }
     history('/', {replace:true})
   }
   return (
@@ -55,7 +71,10 @@ const Notepage = () => {
          <ArrowLeft onClick={handleSubmit}/>
         </Link>
         </h3>
-        <button onClick={deleteNote}>DELETE</button>
+        {noteId !== 'new' ? (
+          <button onClick={deleteNote}>DELETE</button>
+        ) : (<button onClick={handleSubmit}>DONE</button>) }
+
       </div> 
      <textarea onChange={(e)=> setNote({...note ,'body': e.target.value})} value={note?.body}>
 
