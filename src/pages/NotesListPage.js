@@ -16,6 +16,7 @@ const NotesListPage = () => {
     console.log('data: ', data)
     setNotes(data);
   }
+  
   return (
     <div className="notes">
       <div className="notes-header">

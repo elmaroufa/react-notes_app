@@ -8,7 +8,7 @@ const Notepage = () => {
   const history = useNavigate()
   console.log("myobjetc:", params);
   //let note = notes.find(note => note.id === Number(params.id))
-  let noteId = Number(params.id)
+  let noteId = params.id
   let [note, setNote] = useState(null)
   useEffect(()=> {
     getNote()
@@ -55,7 +55,7 @@ const Notepage = () => {
 
     if (noteId !== 'new' && !note.body){
        deleteNote()
-    } else if (noteId === 'new'){
+    } else if (noteId !== 'new'){
       updateNote()
     }
     else if(noteId === 'new' && note !== null) {
@@ -71,8 +71,8 @@ const Notepage = () => {
          <ArrowLeft onClick={handleSubmit}/>
         </Link>
         </h3>
-        {noteId !== 'new' ? (
-          <button onClick={deleteNote}>DELETE</button>
+        { noteId !== 'new' ? (
+          <button onClick={deleteNote}>DELETE {noteId}</button>
         ) : (<button onClick={handleSubmit}>DONE</button>) }
 
       </div> 
